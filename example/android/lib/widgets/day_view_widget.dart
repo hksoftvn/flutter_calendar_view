@@ -61,7 +61,7 @@ class DayViewWidget extends StatelessWidget {
           top: -8,
           right: 8,
           child: Text(
-            "$hour ${date.hour ~/ 12 == 0 ? "am" : "pm"}",
+            "$hour ${date.hour ~/ 12 == 0 ? "AM" : "PM"}",
             textAlign: TextAlign.right,
           ),
         ),
