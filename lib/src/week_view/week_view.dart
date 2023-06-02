@@ -642,34 +642,46 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
 
   /// Default builder for week line.
   Widget _defaultWeekDayBuilder(DateTime date) {
+    final isDate = date.day == DateTime.now().day;
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            widget.weekDayDateStringBuilder?.call(date.day) ??
-                date.day.toString().padLeft(2, '0'),
-            style: TextStyle(
-                color: date.weekday == DateTime.saturday ||
-                        date.weekday == DateTime.sunday
-                    ? Color(0xffFF0000)
-                    : Color(0xff999999),
-                fontSize: 16,
-                fontWeight: FontWeight.w500),
-          ),
-          Text(
-            widget.weekDayStringBuilder?.call(date.weekday - 1) ??
-                Constants.weekTitles[date.weekday - 1],
-            style: TextStyle(
-                color: date.weekday == DateTime.saturday ||
-                        date.weekday == DateTime.sunday
-                    ? Color(0xffFF0000)
-                    : Color(0xff999999),
-                fontSize: 12,
-                fontWeight: FontWeight.w400),
-          ),
-        ],
+      child: Container(
+        width: _weekTitleWidth,
+        height: widget.weekTitleHeight,
+        decoration: BoxDecoration(
+            color: isDate ? Color(0xff5C2E85) : Colors.transparent,
+            border: Border.all(color: Color(0xffE0E0E0), width: 0.5)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.weekDayDateStringBuilder?.call(date.day) ??
+                  date.day.toString().padLeft(2, '0'),
+              style: TextStyle(
+                  color: isDate
+                      ? Colors.white
+                      : date.weekday == DateTime.saturday ||
+                              date.weekday == DateTime.sunday
+                          ? Color(0xffFF0000)
+                          : Color(0xff999999),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500),
+            ),
+            Text(
+              widget.weekDayStringBuilder?.call(date.weekday - 1) ??
+                  Constants.weekTitles[date.weekday - 1],
+              style: TextStyle(
+                  color: isDate
+                      ? Colors.white
+                      : date.weekday == DateTime.saturday ||
+                              date.weekday == DateTime.sunday
+                          ? Color(0xffFF0000)
+                          : Color(0xff999999),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400),
+            ),
+          ],
+        ),
       ),
     );
   }

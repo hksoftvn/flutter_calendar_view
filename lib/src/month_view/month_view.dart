@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../calendar_constants.dart';
 import '../calendar_controller_provider.dart';
 import '../calendar_event_data.dart';
+import '../components/behavior.dart';
 import '../components/components.dart';
 import '../components/safe_area_wrapper.dart';
 import '../constants.dart';
@@ -279,83 +280,59 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeAreaWrapper(
-      option: widget.safeAreaOption,
-      child: SizedBox(
-        width: _width,
-        child: Column(
+    return PageView.builder(
+      controller: _pageController,
+      onPageChanged: _onPageChange,
+      itemBuilder: (_, index) {
+        final date = DateTime(_minDate.year, _minDate.month + index);
+        final weekDays = date.datesOfWeek(start: widget.startDay);
+        return Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: _width,
-              child: _headerBuilder(_currentDate),
-            ),
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                onPageChanged: _onPageChange,
-                itemBuilder: (_, index) {
-                  final date = DateTime(_minDate.year, _minDate.month + index);
-                  final weekDays = date.datesOfWeek(start: widget.startDay);
-
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: _width,
-                        child: Row(
-                          children: List.generate(
-                            7,
-                            (index) => Expanded(
-                              child: SizedBox(
-                                width: _cellWidth,
-                                child:
-                                    _weekBuilder(weekDays[index].weekday - 1),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: LayoutBuilder(builder: (context, constraints) {
-                          final _cellAspectRatio =
-                              widget.useAvailableVerticalSpace
-                                  ? calculateCellAspectRatio(
-                                      constraints.maxHeight,
-                                    )
-                                  : widget.cellAspectRatio;
-
-                          return SizedBox(
-                            height: _height,
-                            width: _width,
-                            child: _MonthPageBuilder<T>(
-                              key: ValueKey(date.toIso8601String()),
-                              onCellTap: widget.onCellTap,
-                              onDateLongPress: widget.onDateLongPress,
-                              width: _width,
-                              height: _height,
-                              controller: controller,
-                              borderColor: widget.borderColor,
-                              borderSize: widget.borderSize,
-                              cellBuilder: _cellBuilder,
-                              cellRatio: _cellAspectRatio,
-                              date: date,
-                              showBorder: widget.showBorder,
-                              startDay: widget.startDay,
-                            ),
-                          );
-                        }),
-                      ),
-                    ],
-                  );
-                },
-                itemCount: _totalMonths,
+              child: Row(
+                children: List.generate(
+                  7,
+                  (index) => Expanded(
+                    child: SizedBox(
+                      width: _cellWidth,
+                      child: _weekBuilder(weekDays[index].weekday - 1),
+                    ),
+                  ),
+                ),
               ),
             ),
+            Expanded(
+              child: LayoutBuilder(builder: (context, constraints) {
+                final _cellAspectRatio = widget.useAvailableVerticalSpace
+                    ? calculateCellAspectRatio(
+                        constraints.maxHeight,
+                      )
+                    : widget.cellAspectRatio;
+
+                return _MonthPageBuilder<T>(
+                  key: ValueKey(date.toIso8601String()),
+                  onCellTap: widget.onCellTap,
+                  onDateLongPress: widget.onDateLongPress,
+                  width: _width,
+                  height: _height,
+                  controller: controller,
+                  borderColor: widget.borderColor,
+                  borderSize: widget.borderSize,
+                  cellBuilder: _cellBuilder,
+                  cellRatio: _cellAspectRatio,
+                  date: date,
+                  showBorder: widget.showBorder,
+                  startDay: widget.startDay,
+                );
+              }),
+            ),
           ],
-        ),
-      ),
+        );
+      },
+      itemCount: _totalMonths,
     );
   }
 
@@ -481,10 +458,11 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
   }
 
   /// Default builder for week line.
-  Widget _defaultWeekDayBuilder(int index) {
+  Widget _defaultWeekDayBuilder(int index, {bool? onWeekday = true}) {
     return WeekDayTile(
       dayIndex: index,
       weekDayStringBuilder: widget.weekDayStringBuilder,
+      displayBorder: false,
     );
   }
 
@@ -498,6 +476,7 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
       events: events,
       onTileTap: widget.onEventTap,
       dateStringBuilder: widget.dateStringBuilder,
+      highlightColor: Color(0xff3B0168),
     );
   }
 
@@ -608,17 +587,16 @@ class _MonthPageBuilder<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final monthDays = date.datesOfMonths(startDay: startDay);
-    return Container(
-      width: width,
-      height: height,
+    return ScrollConfiguration(
+      behavior: MyBehavior(),
       child: GridView.builder(
+        padding: EdgeInsets.zero,
         physics: ClampingScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 7,
           childAspectRatio: cellRatio,
         ),
         itemCount: 42,
-        shrinkWrap: true,
         itemBuilder: (context, index) {
           final events = controller.getEventsOnDay(monthDays[index]);
           return GestureDetector(
