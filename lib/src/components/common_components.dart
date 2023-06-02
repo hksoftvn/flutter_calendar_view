@@ -30,13 +30,8 @@ class CalendarPageHeader extends StatelessWidget {
   /// Provides string to display as title.
   final StringProvider dateStringBuilder;
 
-  // TODO: Need to remove after next release
-  /// background color of header.
   @Deprecated("Use Header Style to provide background")
   final Color backgroundColor;
-
-  // TODO: Need to remove after next release
-  /// Color of icons at both sides of header.
   @Deprecated("Use Header Style to provide icon color")
   final Color iconColor;
 

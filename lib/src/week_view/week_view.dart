@@ -483,7 +483,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
   void _updateViewDimensions() {
     _width = widget.width ?? MediaQuery.of(context).size.width;
 
-    _timeLineWidth = widget.timeLineWidth ?? _width * 0.14;
+    _timeLineWidth = widget.timeLineWidth ?? _width * 0.15;
 
     _liveTimeIndicatorSettings = widget.liveTimeIndicatorSettings ??
         HourIndicatorSettings(
@@ -649,7 +649,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
         children: [
           Text(
             widget.weekDayDateStringBuilder?.call(date.day) ??
-                date.day.toString(),
+                date.day.toString().padLeft(2, '0'),
             style: TextStyle(
                 color: date.weekday == DateTime.saturday ||
                         date.weekday == DateTime.sunday

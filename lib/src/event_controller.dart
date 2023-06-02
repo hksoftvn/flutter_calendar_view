@@ -34,9 +34,6 @@ class EventController<T extends Object?> extends ChangeNotifier {
 
   //#region Public Fields
 
-  // TODO: change the type from List<CalendarEventData>
-  //  to UnmodifiableListView provided in dart:collection.
-
   // Note: Do not use this getter inside of EventController class.
   // use _eventList instead.
   /// Returns list of [CalendarEventData<T>] stored in this controller.

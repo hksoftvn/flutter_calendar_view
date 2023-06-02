@@ -313,17 +313,17 @@ class InternalWeekViewPage<T extends Object?> extends StatelessWidget {
 
   List<DateTime> _filteredDate() {
     final output = <DateTime>[];
-    final daysOfWeek = <String>[
-      'Chủ Nhật',
-      'Thứ Hai',
-      'Thứ Ba',
-      'Thứ Tư',
-      'Thứ Năm',
-      'Thứ Sáu',
-      'Thứ Bảy',
-    ];
 
     final weekDays = this.weekDays.toList();
+    dates.sort((a, b) {
+      if (a.weekday == DateTime.sunday) {
+        return -1;
+      } else if (b.weekday == DateTime.sunday) {
+        return 1;
+      } else {
+        return a.compareTo(b);
+      }
+    });
 
     for (final date in dates) {
       if (weekDays.any((weekDay) => weekDay.index + 1 == date.weekday)) {
