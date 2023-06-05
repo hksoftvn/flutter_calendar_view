@@ -24,6 +24,16 @@ class Constants {
     "Sun"
   ];
 
+  static final List<String> agendaListDay = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thusday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
+
   static const Color defaultLiveTimeIndicatorColor = Color(0xff444444);
   static const Color defaultBorderColor = Color(0xffdddddd);
   static const Color black = Color(0xff000000);
