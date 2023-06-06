@@ -4,6 +4,7 @@
 
 library calendar_view;
 
+export './src/agenda/agenda_view.dart';
 export './src/calendar_constants.dart';
 export './src/calendar_controller_provider.dart';
 export './src/calendar_event_data.dart';

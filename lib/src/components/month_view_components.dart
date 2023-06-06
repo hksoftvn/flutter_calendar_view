@@ -121,9 +121,10 @@ class FilledCell<T extends Object?> extends StatelessWidget {
     return Container(
       color: backgroundColor,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 5.0,
+            height: 2.0,
           ),
           CircleAvatar(
             radius: highlightRadius,
@@ -254,7 +255,7 @@ class WeekDayTile extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.zero,
-      padding: EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.symmetric(vertical: 16.0),
       decoration: BoxDecoration(
         color: backgroundColor,
         border: displayBorder
@@ -265,11 +266,12 @@ class WeekDayTile extends StatelessWidget {
             : null,
       ),
       child: Text(
-        weekDayStringBuilder?.call(dayIndex) ?? Constants.weekTitles[dayIndex],
+        weekDayStringBuilder?.call(dayIndex) ??
+            Constants.weekTitles[dayIndex].toUpperCase(),
         style: textStyle ??
             TextStyle(
-              fontSize: 17,
-              color: Constants.black,
+              fontSize: 14,
+              color: Color(0xff999999),
             ),
       ),
     );

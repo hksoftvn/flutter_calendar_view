@@ -133,16 +133,21 @@ class HalfHourLinePainter extends CustomPainter {
       ..strokeWidth = lineHeight;
 
     for (var i = 0; i < Constants.hoursADay; i++) {
-      final dy = i * minuteHeight * 60 + (minuteHeight * 30);
+      final dy0 = i * minuteHeight * 60 + (minuteHeight * 15);
+      final dy1 = i * minuteHeight * 60 + (minuteHeight * 30);
+      final dy2 = i * minuteHeight * 60 + (minuteHeight * 45);
       if (lineStyle == LineStyle.dashed) {
         var startX = offset;
         while (startX < size.width) {
           canvas.drawLine(
-              Offset(startX, dy), Offset(startX + dashWidth, dy), paint);
+              Offset(startX, dy0), Offset(startX + dashWidth, dy0), paint);
           startX += dashWidth + dashSpaceWidth;
         }
       } else {
-        canvas.drawLine(Offset(offset, dy), Offset(size.width, dy), paint);
+        canvas
+          ..drawLine(Offset(offset, dy0), Offset(size.width, dy0), paint)
+          ..drawLine(Offset(offset, dy1), Offset(size.width, dy1), paint)
+          ..drawLine(Offset(offset, dy2), Offset(size.width, dy2), paint);
       }
     }
   }

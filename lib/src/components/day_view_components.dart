@@ -155,12 +155,9 @@ class DefaultTimeLineMark extends StatelessWidget {
   final TextStyle? markingStyle;
 
   /// Time marker for timeline used in week and day view.
-  const DefaultTimeLineMark({
-    Key? key,
-    required this.date,
-    this.markingStyle,
-    this.timeStringBuilder,
-  }) : super(key: key);
+  const DefaultTimeLineMark(
+      {Key? key, required this.date, this.markingStyle, this.timeStringBuilder})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -168,8 +165,8 @@ class DefaultTimeLineMark extends StatelessWidget {
     final timeString = (timeStringBuilder != null)
         ? timeStringBuilder!(date)
         : date.minute != 0
-            ? "$hour:${date.minute}"
-            : "$hour ${date.hour ~/ 12 == 0 ? "am" : "pm"}";
+            ? "${date.minute}"
+            : "$hour ${date.hour ~/ 12 == 0 ? "AM" : "PM"}";
     return Transform.translate(
       offset: Offset(0, -7.5),
       child: Padding(
@@ -179,8 +176,9 @@ class DefaultTimeLineMark extends StatelessWidget {
           textAlign: TextAlign.right,
           style: markingStyle ??
               TextStyle(
-                fontSize: 15.0,
-              ),
+                  fontSize: 12.0,
+                  fontWeight:
+                      date.minute != 0 ? FontWeight.w400 : FontWeight.w600),
         ),
       ),
     );

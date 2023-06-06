@@ -117,7 +117,7 @@ class TimeLine extends StatelessWidget {
 
   static DateTime get _date => DateTime.now();
 
-  double get _halfHourHeight => hourHeight / 2;
+  double get _halfHourHeight => hourHeight / 4;
 
   /// Time line to display time at left side of day or week view.
   const TimeLine({
@@ -149,14 +149,31 @@ class TimeLine extends StatelessWidget {
               hour: i,
             ),
           if (showHalfHours)
-            for (int i = 0; i < Constants.hoursADay; i++)
+            for (int i = 0; i < Constants.hoursADay; i++) ...{
               _timelinePositioned(
                 topPosition: hourHeight * i - timeLineOffset + _halfHourHeight,
                 bottomPosition:
                     height - (hourHeight * (i + 1)) + timeLineOffset,
                 hour: i,
+                minutes: 15,
+              ),
+              _timelinePositioned(
+                topPosition:
+                    hourHeight * i - timeLineOffset + _halfHourHeight * 2,
+                bottomPosition:
+                    height - (hourHeight * (i + 1)) + timeLineOffset,
+                hour: i,
                 minutes: 30,
               ),
+              _timelinePositioned(
+                topPosition:
+                    hourHeight * i - timeLineOffset + _halfHourHeight * 3,
+                bottomPosition:
+                    height - (hourHeight * (i + 1)) + timeLineOffset,
+                hour: i,
+                minutes: 45,
+              ),
+            }
         ],
       ),
     );

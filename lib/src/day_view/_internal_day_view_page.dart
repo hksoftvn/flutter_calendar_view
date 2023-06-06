@@ -133,97 +133,86 @@ class InternalDayViewPage<T extends Object?> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      child: Column(
+    return SingleChildScrollView(
+      controller: scrollController,
+      child: Stack(
         children: [
-          fullDayEventBuilder(controller.getFullDayEvent(date), date),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: SizedBox(
-                height: height,
-                width: width,
-                child: Stack(
-                  children: [
-                    CustomPaint(
-                      size: Size(width, height),
-                      painter: HourLinePainter(
-                        lineColor: hourIndicatorSettings.color,
-                        lineHeight: hourIndicatorSettings.height,
-                        offset: timeLineWidth + hourIndicatorSettings.offset,
-                        minuteHeight: heightPerMinute,
-                        verticalLineOffset: verticalLineOffset,
-                        showVerticalLine: showVerticalLine,
-                        lineStyle: hourIndicatorSettings.lineStyle,
-                        dashWidth: hourIndicatorSettings.dashWidth,
-                        dashSpaceWidth: hourIndicatorSettings.dashSpaceWidth,
-                      ),
-                    ),
-                    if (showHalfHours)
-                      CustomPaint(
-                        size: Size(width, height),
-                        painter: HalfHourLinePainter(
-                          lineColor: halfHourIndicatorSettings.color,
-                          lineHeight: halfHourIndicatorSettings.height,
-                          offset:
-                              timeLineWidth + halfHourIndicatorSettings.offset,
-                          minuteHeight: heightPerMinute,
-                          lineStyle: halfHourIndicatorSettings.lineStyle,
-                          dashWidth: halfHourIndicatorSettings.dashWidth,
-                          dashSpaceWidth:
-                              halfHourIndicatorSettings.dashSpaceWidth,
-                        ),
-                      ),
-                    dayDetectorBuilder(
-                      width: width,
-                      height: height,
-                      heightPerMinute: heightPerMinute,
-                      date: date,
-                      minuteSlotSize: minuteSlotSize,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: EventGenerator<T>(
-                        height: height,
-                        date: date,
-                        onTileTap: onTileTap,
-                        eventArranger: eventArranger,
-                        events: controller.getEventsOnDay(date),
-                        heightPerMinute: heightPerMinute,
-                        eventTileBuilder: eventTileBuilder,
-                        scrollNotifier: scrollNotifier,
-                        width: width -
-                            timeLineWidth -
-                            hourIndicatorSettings.offset -
-                            verticalLineOffset,
-                      ),
-                    ),
-                    TimeLine(
-                      height: height,
-                      hourHeight: hourHeight,
-                      timeLineBuilder: timeLineBuilder,
-                      timeLineOffset: timeLineOffset,
-                      timeLineWidth: timeLineWidth,
-                      showHalfHours: showHalfHours,
-                      key: ValueKey(heightPerMinute),
-                    ),
-                    if (showLiveLine && liveTimeIndicatorSettings.height > 0)
-                      IgnorePointer(
-                        child: LiveTimeIndicator(
-                          liveTimeIndicatorSettings: liveTimeIndicatorSettings,
-                          width: width,
-                          height: height,
-                          heightPerMinute: heightPerMinute,
-                          timeLineWidth: timeLineWidth,
-                        ),
-                      ),
-                  ],
-                ),
+          Container(
+            color: Color(0xffF0F0F0),
+            child: CustomPaint(
+              size: Size(width, height),
+              painter: HourLinePainter(
+                lineColor: hourIndicatorSettings.color,
+                lineHeight: hourIndicatorSettings.height,
+                offset: timeLineWidth + hourIndicatorSettings.offset,
+                minuteHeight: heightPerMinute,
+                verticalLineOffset: verticalLineOffset,
+                showVerticalLine: showVerticalLine,
+                lineStyle: hourIndicatorSettings.lineStyle,
+                dashWidth: hourIndicatorSettings.dashWidth,
+                dashSpaceWidth: hourIndicatorSettings.dashSpaceWidth,
               ),
             ),
           ),
+          if (showHalfHours)
+            CustomPaint(
+              size: Size(width, height),
+              painter: HalfHourLinePainter(
+                lineColor: halfHourIndicatorSettings.color,
+                lineHeight: halfHourIndicatorSettings.height,
+                offset: timeLineWidth + halfHourIndicatorSettings.offset,
+                minuteHeight: heightPerMinute,
+                lineStyle: halfHourIndicatorSettings.lineStyle,
+                dashWidth: halfHourIndicatorSettings.dashWidth,
+                dashSpaceWidth: halfHourIndicatorSettings.dashSpaceWidth,
+              ),
+            ),
+          dayDetectorBuilder(
+            width: width,
+            height: height,
+            heightPerMinute: heightPerMinute,
+            date: date,
+            minuteSlotSize: minuteSlotSize,
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: EventGenerator<T>(
+              height: height,
+              date: date,
+              onTileTap: onTileTap,
+              eventArranger: eventArranger,
+              events: controller.getEventsOnDay(date),
+              heightPerMinute: heightPerMinute,
+              eventTileBuilder: eventTileBuilder,
+              scrollNotifier: scrollNotifier,
+              width: width -
+                  timeLineWidth -
+                  hourIndicatorSettings.offset -
+                  verticalLineOffset,
+            ),
+          ),
+          Container(
+            color: Color(0xffF8F8F8),
+            child: TimeLine(
+              height: height,
+              hourHeight: hourHeight,
+              timeLineBuilder: timeLineBuilder,
+              timeLineOffset: timeLineOffset,
+              timeLineWidth: timeLineWidth,
+              showHalfHours: showHalfHours,
+              key: ValueKey(heightPerMinute),
+            ),
+          ),
+          if (showLiveLine && liveTimeIndicatorSettings.height > 0)
+            IgnorePointer(
+              child: LiveTimeIndicator(
+                liveTimeIndicatorSettings: liveTimeIndicatorSettings,
+                width: width,
+                height: height,
+                heightPerMinute: heightPerMinute,
+                timeLineWidth: timeLineWidth,
+              ),
+            ),
         ],
       ),
     );

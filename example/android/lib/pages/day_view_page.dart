@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +27,7 @@ class _DayViewPageDemoState extends State<DayViewPageDemo> {
               await context.pushRoute<CalendarEventData<Event>>(CreateEventPage(
             withDuration: true,
           ));
+          log("check data: $event");
           if (event == null) return;
           CalendarControllerProvider.of<Event>(context).controller.add(event);
         },
