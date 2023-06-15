@@ -315,15 +315,15 @@ class InternalWeekViewPage<T extends Object?> extends StatelessWidget {
     final output = <DateTime>[];
 
     final weekDays = this.weekDays.toList();
-    dates.sort((a, b) {
-      if (a.weekday == DateTime.sunday) {
-        return -1;
-      } else if (b.weekday == DateTime.sunday) {
-        return 1;
-      } else {
-        return a.compareTo(b);
-      }
-    });
+    // dates.sort((a, b) {
+    //   if (a.weekday == DateTime.sunday) {
+    //     return -1;
+    //   } else if (b.weekday == DateTime.sunday) {
+    //     return 1;
+    //   } else {
+    //     return a.compareTo(b);
+    //   }
+    // });
 
     for (final date in dates) {
       if (weekDays.any((weekDay) => weekDay.index + 1 == date.weekday)) {

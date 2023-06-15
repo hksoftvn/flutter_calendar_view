@@ -5,7 +5,9 @@ import '../components/behavior.dart';
 
 class AgendaView extends StatefulWidget {
   final Widget Function(DateTime date) bodyAgenda;
-  const AgendaView({Key? key, required this.bodyAgenda}) : super(key: key);
+  final CalendarPageChangeCallBack? onPageChange;
+  const AgendaView({Key? key, required this.bodyAgenda, this.onPageChange})
+      : super(key: key);
 
   @override
   State<AgendaView> createState() => _AgendaViewState();
@@ -18,14 +20,14 @@ class _AgendaViewState extends State<AgendaView> {
   late int _totalWeeks;
   late PageController _pageController;
   late int _currentIndex;
-  late DateTime _currentWeek;
+  late DateTime _currentDate;
   late DateTime _currentEndDate;
 
   @override
   void initState() {
     _setDateRange();
 
-    _currentWeek = DateTime.now().withoutTime;
+    _currentDate = DateTime.now().withoutTime;
 
     _regulateCurrentDate();
     _pageController = PageController(initialPage: _currentIndex);
@@ -42,6 +44,12 @@ class _AgendaViewState extends State<AgendaView> {
   Widget build(BuildContext context) {
     return PageView.builder(
         controller: _pageController,
+        onPageChanged: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+          widget.onPageChange?.call(_currentDate, _currentIndex);
+        },
         itemCount: _totalWeeks,
         itemBuilder: (context, index) {
           final dates = DateTime(_minDate.year, _minDate.month,
@@ -71,13 +79,13 @@ class _AgendaViewState extends State<AgendaView> {
   }
 
   void _regulateCurrentDate() {
-    if (_currentWeek.isBefore(_minDate)) {
-      _currentWeek = _minDate;
-    } else if (_currentWeek.isAfter(_maxDate)) {
-      _currentWeek = _maxDate;
+    if (_currentDate.isBefore(_minDate)) {
+      _currentDate = _minDate;
+    } else if (_currentDate.isAfter(_maxDate)) {
+      _currentDate = _maxDate;
     }
 
-    _currentEndDate = _currentWeek.lastDayOfWeek(start: startDay);
+    _currentEndDate = _currentDate.lastDayOfWeek(start: startDay);
     _currentIndex =
         _minDate.getWeekDifference(_currentEndDate, start: startDay);
   }

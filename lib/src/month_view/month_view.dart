@@ -304,6 +304,7 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
                 ),
               ),
             ),
+            Divider(height: 1, thickness: 0.5, color: widget.borderColor),
             Expanded(
               child: LayoutBuilder(builder: (context, constraints) {
                 final _cellAspectRatio = widget.useAvailableVerticalSpace

@@ -365,6 +365,7 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
 
   @override
   Widget build(BuildContext context) {
+    // final date = _currentDate;
     return Column(
       children: [
         _dayTitleBuilder(_currentDate),
