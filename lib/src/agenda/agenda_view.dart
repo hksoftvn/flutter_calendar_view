@@ -6,7 +6,12 @@ import '../components/behavior.dart';
 class AgendaView extends StatefulWidget {
   final Widget Function(DateTime date) bodyAgenda;
   final CalendarPageChangeCallBack? onPageChange;
-  const AgendaView({Key? key, required this.bodyAgenda, this.onPageChange})
+  final PageController? pageController;
+  const AgendaView(
+      {Key? key,
+      required this.bodyAgenda,
+      this.onPageChange,
+      this.pageController})
       : super(key: key);
 
   @override
@@ -55,6 +60,7 @@ class _AgendaViewState extends State<AgendaView> {
           final dates = DateTime(_minDate.year, _minDate.month,
                   _minDate.day + (index * DateTime.daysPerWeek))
               .datesOfWeek(start: startDay);
+          _currentDate = dates.first;
           return _InternalAgendaViewPage(
             dates: dates,
             bodyAgenda: widget.bodyAgenda,

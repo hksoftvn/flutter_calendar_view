@@ -2,6 +2,8 @@
 // Use of this source code is governed by a MIT-style license
 // that can be found in the LICENSE file.
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../calendar_constants.dart';
@@ -184,6 +186,10 @@ class WeekView<T extends Object?> extends StatefulWidget {
 
   /// Display full day event builder.
   final FullDayEventBuilder<T>? fullDayEventBuilder;
+  // final VoidCallback callback;
+  final PageController? pageController;
+
+  // final PageController pageController;
 
   /// Main widget for week view.
   const WeekView({
@@ -227,6 +233,8 @@ class WeekView<T extends Object?> extends StatefulWidget {
     this.safeAreaOption = const SafeAreaOption(),
     this.fullDayEventBuilder,
     this.halfHourIndicatorSettings,
+    // required this.callback,
+    this.pageController,
   })  : assert((timeLineOffset) >= 0,
             "timeLineOffset must be greater than or equal to 0"),
         assert(width == null || width > 0,
@@ -306,6 +314,8 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
     _calculateHeights();
     _scrollController =
         ScrollController(initialScrollOffset: widget.scrollOffset);
+    // _pageController = PageController(initialPage: _currentIndex);
+    log("current page: $_currentIndex");
     _pageController = PageController(initialPage: _currentIndex);
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
 
@@ -642,7 +652,8 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
 
   /// Default builder for week line.
   Widget _defaultWeekDayBuilder(DateTime date) {
-    final isDate = date.day == DateTime.now().day;
+    log("check date: $date and ${DateTime.now()}");
+    final isDate = date == DateTime.now();
     return Center(
       child: Container(
         width: _weekTitleWidth,
@@ -792,6 +803,11 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
     widget.onPageChange?.call(_currentStartDate, _currentIndex);
   }
 
+  // void setPageJump(DateTime date){
+  //   widget.onPageJump?.call();
+  //   _pageController.jumpToPage(_currentIndex + 10);
+  // }
+
   /// Animate to next page
   ///
   /// Arguments [duration] and [curve] will override default values provided
@@ -838,6 +854,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
 
   /// Jumps to page which gives day calendar for [week]
   void jumpToWeek(DateTime week) {
+    //  widget.callback();
     if (week.isBefore(_minDate) || week.isAfter(_maxDate)) {
       throw "Invalid date selected.";
     }

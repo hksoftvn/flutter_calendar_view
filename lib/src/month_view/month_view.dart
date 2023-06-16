@@ -138,36 +138,38 @@ class MonthView<T extends Object?> extends StatefulWidget {
 
   /// Option for SafeArea.
   final SafeAreaOption safeAreaOption;
+  final PageController? pageController;
 
   /// Main [Widget] to display month view.
-  const MonthView({
-    Key? key,
-    this.showBorder = true,
-    this.borderColor = Constants.defaultBorderColor,
-    this.cellBuilder,
-    this.minMonth,
-    this.maxMonth,
-    this.controller,
-    this.initialMonth,
-    this.borderSize = 1,
-    this.useAvailableVerticalSpace = false,
-    this.cellAspectRatio = 0.55,
-    this.headerBuilder,
-    this.weekDayBuilder,
-    this.pageTransitionDuration = const Duration(milliseconds: 300),
-    this.pageTransitionCurve = Curves.ease,
-    this.width,
-    this.onPageChange,
-    this.onCellTap,
-    this.onEventTap,
-    this.onDateLongPress,
-    this.startDay = WeekDays.monday,
-    this.headerStringBuilder,
-    this.dateStringBuilder,
-    this.weekDayStringBuilder,
-    this.headerStyle = const HeaderStyle(),
-    this.safeAreaOption = const SafeAreaOption(),
-  }) : super(key: key);
+  const MonthView(
+      {Key? key,
+      this.showBorder = true,
+      this.borderColor = Constants.defaultBorderColor,
+      this.cellBuilder,
+      this.minMonth,
+      this.maxMonth,
+      this.controller,
+      this.initialMonth,
+      this.borderSize = 1,
+      this.useAvailableVerticalSpace = false,
+      this.cellAspectRatio = 0.55,
+      this.headerBuilder,
+      this.weekDayBuilder,
+      this.pageTransitionDuration = const Duration(milliseconds: 300),
+      this.pageTransitionCurve = Curves.ease,
+      this.width,
+      this.onPageChange,
+      this.onCellTap,
+      this.onEventTap,
+      this.onDateLongPress,
+      this.startDay = WeekDays.monday,
+      this.headerStringBuilder,
+      this.dateStringBuilder,
+      this.weekDayStringBuilder,
+      this.headerStyle = const HeaderStyle(),
+      this.safeAreaOption = const SafeAreaOption(),
+      this.pageController})
+      : super(key: key);
 
   @override
   MonthViewState<T> createState() => MonthViewState<T>();
@@ -274,7 +276,7 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
   @override
   void dispose() {
     _controller?.removeListener(_reloadCallback);
-    _pageController.dispose();
+    // _pageController.dispose();
     super.dispose();
   }
 
