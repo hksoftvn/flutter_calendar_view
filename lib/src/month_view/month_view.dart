@@ -218,7 +218,8 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
     _regulateCurrentDate();
 
     // Initialize page controller to control page actions.
-    _pageController = PageController(initialPage: _currentIndex);
+    _pageController =
+        widget.pageController ?? PageController(initialPage: _currentIndex);
 
     _assignBuilders();
   }

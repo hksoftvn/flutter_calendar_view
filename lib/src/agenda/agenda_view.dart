@@ -7,11 +7,13 @@ class AgendaView extends StatefulWidget {
   final Widget Function(DateTime date) bodyAgenda;
   final CalendarPageChangeCallBack? onPageChange;
   final PageController? pageController;
+  final DateTime? initialDay;
   const AgendaView(
       {Key? key,
       required this.bodyAgenda,
       this.onPageChange,
-      this.pageController})
+      this.pageController,
+      this.initialDay})
       : super(key: key);
 
   @override
@@ -32,10 +34,11 @@ class _AgendaViewState extends State<AgendaView> {
   void initState() {
     _setDateRange();
 
-    _currentDate = DateTime.now().withoutTime;
+    _currentDate = (widget.initialDay ?? DateTime.now()).withoutTime;
 
     _regulateCurrentDate();
-    _pageController = PageController(initialPage: _currentIndex);
+    _pageController =
+        widget.pageController ?? PageController(initialPage: _currentIndex);
     super.initState();
   }
 

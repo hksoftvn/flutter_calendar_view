@@ -347,7 +347,7 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
       _setDateRange();
       _regulateCurrentDate();
 
-      _pageController.jumpToPage(_currentIndex);
+      // _pageController.jumpToPage(_currentIndex);
     }
 
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();

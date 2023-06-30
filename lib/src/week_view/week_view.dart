@@ -314,9 +314,9 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
     _calculateHeights();
     _scrollController =
         ScrollController(initialScrollOffset: widget.scrollOffset);
-    // _pageController = PageController(initialPage: _currentIndex);
-    log("current page: $_currentIndex");
-    _pageController = PageController(initialPage: _currentIndex);
+    _pageController =
+        widget.pageController ?? PageController(initialPage: _currentIndex);
+
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
 
     _assignBuilders();
@@ -382,7 +382,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
   @override
   void dispose() {
     _controller?.removeListener(_reloadCallback);
-    _pageController.dispose();
+    // _pageController.dispose();
     super.dispose();
   }
 
