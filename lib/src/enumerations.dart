@@ -30,6 +30,8 @@ enum WeekDays {
 
 /// Defines different minute slot sizes.
 enum MinuteSlotSize {
+  minutes10,
+
   /// Slot size: 15 minutes
   minutes15,
 

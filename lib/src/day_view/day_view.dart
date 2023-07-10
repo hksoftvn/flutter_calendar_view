@@ -186,6 +186,7 @@ class DayView<T extends Object?> extends StatefulWidget {
   final bool showHalfHours;
 
   final PageController? pageController;
+  final MinuteSlotSize? resolutionTime;
 
   /// Main widget for day view.
   const DayView({
@@ -227,6 +228,7 @@ class DayView<T extends Object?> extends StatefulWidget {
     this.showHalfHours = false,
     this.halfHourIndicatorSettings,
     this.pageController,
+    this.resolutionTime = MinuteSlotSize.minutes15,
   })  : assert(timeLineOffset >= 0,
             "timeLineOffset must be greater than or equal to 0"),
         assert(width == null || width > 0,
@@ -301,7 +303,7 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
         ScrollController(initialScrollOffset: widget.scrollOffset);
     _pageController =
         widget.pageController ?? PageController(initialPage: _currentIndex);
-    
+
     _eventArranger = widget.eventArranger ?? SideEventArranger<T>();
     _assignBuilders();
   }
@@ -395,6 +397,7 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
                       liveTimeIndicatorSettings: _liveTimeIndicatorSettings,
                       timeLineBuilder: _timeLineBuilder,
                       dayDetectorBuilder: _dayDetectorBuilder,
+                      resolutionTime: widget.resolutionTime,
                       eventTileBuilder: _eventTileBuilder,
                       heightPerMinute: widget.heightPerMinute,
                       hourIndicatorSettings: _hourIndicatorSettings,

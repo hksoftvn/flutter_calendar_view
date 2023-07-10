@@ -117,18 +117,27 @@ class TimeLine extends StatelessWidget {
 
   static DateTime get _date => DateTime.now();
 
-  double get _halfHourHeight => hourHeight / 4;
+  double get _halfHourHeight {
+    if (resolutionTime == MinuteSlotSize.minutes10) {
+      return hourHeight / 6;
+    } else {
+      return hourHeight / 4;
+    }
+  }
+
+  final MinuteSlotSize? resolutionTime;
 
   /// Time line to display time at left side of day or week view.
-  const TimeLine({
-    Key? key,
-    required this.timeLineWidth,
-    required this.hourHeight,
-    required this.height,
-    required this.timeLineOffset,
-    required this.timeLineBuilder,
-    this.showHalfHours = false,
-  }) : super(key: key);
+  const TimeLine(
+      {Key? key,
+      required this.timeLineWidth,
+      required this.hourHeight,
+      required this.height,
+      required this.timeLineOffset,
+      required this.timeLineBuilder,
+      this.showHalfHours = false,
+      this.resolutionTime = MinuteSlotSize.minutes15})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +157,7 @@ class TimeLine extends StatelessWidget {
               bottomPosition: height - (hourHeight * (i + 1)) + timeLineOffset,
               hour: i,
             ),
-          if (showHalfHours)
+          if (showHalfHours && resolutionTime == MinuteSlotSize.minutes15)
             for (int i = 0; i < Constants.hoursADay; i++) ...{
               _timelinePositioned(
                 topPosition: hourHeight * i - timeLineOffset + _halfHourHeight,
@@ -172,6 +181,48 @@ class TimeLine extends StatelessWidget {
                     height - (hourHeight * (i + 1)) + timeLineOffset,
                 hour: i,
                 minutes: 45,
+              ),
+            }
+          else if (showHalfHours && resolutionTime == MinuteSlotSize.minutes10)
+            for (int i = 0; i < Constants.hoursADay; i++) ...{
+              _timelinePositioned(
+                topPosition: hourHeight * i - timeLineOffset + _halfHourHeight,
+                bottomPosition:
+                    height - (hourHeight * (i + 1)) + timeLineOffset,
+                hour: i,
+                minutes: 10,
+              ),
+              _timelinePositioned(
+                topPosition:
+                    hourHeight * i - timeLineOffset + _halfHourHeight * 2,
+                bottomPosition:
+                    height - (hourHeight * (i + 1)) + timeLineOffset,
+                hour: i,
+                minutes: 20,
+              ),
+              _timelinePositioned(
+                topPosition:
+                    hourHeight * i - timeLineOffset + _halfHourHeight * 3,
+                bottomPosition:
+                    height - (hourHeight * (i + 1)) + timeLineOffset,
+                hour: i,
+                minutes: 30,
+              ),
+              _timelinePositioned(
+                topPosition:
+                    hourHeight * i - timeLineOffset + _halfHourHeight * 4,
+                bottomPosition:
+                    height - (hourHeight * (i + 1)) + timeLineOffset,
+                hour: i,
+                minutes: 40,
+              ),
+              _timelinePositioned(
+                topPosition:
+                    hourHeight * i - timeLineOffset + _halfHourHeight * 5,
+                bottomPosition:
+                    height - (hourHeight * (i + 1)) + timeLineOffset,
+                hour: i,
+                minutes: 50,
               ),
             }
         ],

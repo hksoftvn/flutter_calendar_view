@@ -114,6 +114,7 @@ class HalfHourLinePainter extends CustomPainter {
 
   /// Line dash space width when using the [LineStyle.dashed] style
   final double dashSpaceWidth;
+  final MinuteSlotSize? resolutionTime;
 
   /// Paint half hour lines
   HalfHourLinePainter({
@@ -124,6 +125,7 @@ class HalfHourLinePainter extends CustomPainter {
     required this.lineStyle,
     this.dashWidth = 4,
     this.dashSpaceWidth = 4,
+    this.resolutionTime = MinuteSlotSize.minutes15,
   });
 
   @override
@@ -133,21 +135,44 @@ class HalfHourLinePainter extends CustomPainter {
       ..strokeWidth = lineHeight;
 
     for (var i = 0; i < Constants.hoursADay; i++) {
-      final dy0 = i * minuteHeight * 60 + (minuteHeight * 15);
-      final dy1 = i * minuteHeight * 60 + (minuteHeight * 30);
-      final dy2 = i * minuteHeight * 60 + (minuteHeight * 45);
-      if (lineStyle == LineStyle.dashed) {
-        var startX = offset;
-        while (startX < size.width) {
-          canvas.drawLine(
-              Offset(startX, dy0), Offset(startX + dashWidth, dy0), paint);
-          startX += dashWidth + dashSpaceWidth;
+      if (resolutionTime == MinuteSlotSize.minutes10) {
+        final dy0 = i * minuteHeight * 60 + (minuteHeight * 10);
+        final dy1 = i * minuteHeight * 60 + (minuteHeight * 20);
+        final dy2 = i * minuteHeight * 60 + (minuteHeight * 30);
+        final dy3 = i * minuteHeight * 60 + (minuteHeight * 40);
+        final dy4 = i * minuteHeight * 60 + (minuteHeight * 50);
+        if (lineStyle == LineStyle.dashed) {
+          var startX = offset;
+          while (startX < size.width) {
+            canvas.drawLine(
+                Offset(startX, dy0), Offset(startX + dashWidth, dy0), paint);
+            startX += dashWidth + dashSpaceWidth;
+          }
+        } else {
+          canvas
+            ..drawLine(Offset(offset, dy0), Offset(size.width, dy0), paint)
+            ..drawLine(Offset(offset, dy1), Offset(size.width, dy1), paint)
+            ..drawLine(Offset(offset, dy2), Offset(size.width, dy2), paint)
+            ..drawLine(Offset(offset, dy3), Offset(size.width, dy3), paint)
+            ..drawLine(Offset(offset, dy4), Offset(size.width, dy4), paint);
         }
       } else {
-        canvas
-          ..drawLine(Offset(offset, dy0), Offset(size.width, dy0), paint)
-          ..drawLine(Offset(offset, dy1), Offset(size.width, dy1), paint)
-          ..drawLine(Offset(offset, dy2), Offset(size.width, dy2), paint);
+        final dy0 = i * minuteHeight * 60 + (minuteHeight * 15);
+        final dy1 = i * minuteHeight * 60 + (minuteHeight * 30);
+        final dy2 = i * minuteHeight * 60 + (minuteHeight * 45);
+        if (lineStyle == LineStyle.dashed) {
+          var startX = offset;
+          while (startX < size.width) {
+            canvas.drawLine(
+                Offset(startX, dy0), Offset(startX + dashWidth, dy0), paint);
+            startX += dashWidth + dashSpaceWidth;
+          }
+        } else {
+          canvas
+            ..drawLine(Offset(offset, dy0), Offset(size.width, dy0), paint)
+            ..drawLine(Offset(offset, dy1), Offset(size.width, dy1), paint)
+            ..drawLine(Offset(offset, dy2), Offset(size.width, dy2), paint);
+        }
       }
     }
   }
