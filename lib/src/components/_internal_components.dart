@@ -220,7 +220,7 @@ class TimeLine extends StatelessWidget {
                 topPosition:
                     hourHeight * i - timeLineOffset + _halfHourHeight * 5,
                 bottomPosition:
-                    height - (hourHeight * (i + 1)) + timeLineOffset,
+                    height - (hourHeight * (i + 1)) + timeLineOffset - 2,
                 hour: i,
                 minutes: 50,
               ),

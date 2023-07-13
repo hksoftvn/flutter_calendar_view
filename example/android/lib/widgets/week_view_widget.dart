@@ -12,6 +12,7 @@ class WeekViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WeekView<Event>(
+      showHalfHours: true,
       key: state,
       width: width,
     );

@@ -189,6 +189,10 @@ class WeekView<T extends Object?> extends StatefulWidget {
   // final VoidCallback callback;
   final PageController? pageController;
 
+  final bool showHalfHours;
+
+  final MinuteSlotSize? resolutionTime;
+
   // final PageController pageController;
 
   /// Main widget for week view.
@@ -234,7 +238,7 @@ class WeekView<T extends Object?> extends StatefulWidget {
     this.fullDayEventBuilder,
     this.halfHourIndicatorSettings,
     // required this.callback,
-    this.pageController,
+    this.pageController, required this.showHalfHours, this.resolutionTime,
   })  : assert((timeLineOffset) >= 0,
             "timeLineOffset must be greater than or equal to 0"),
         assert(width == null || width > 0,
@@ -413,6 +417,8 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
                           _hourHeight.toString() + dates[0].toString()),
                       height: _height,
                       width: _width,
+                      resolutionTime: widget.resolutionTime,
+                      showHalfHours: widget.showHalfHours,
                       weekTitleWidth: _weekTitleWidth,
                       weekTitleHeight: widget.weekTitleHeight,
                       weekDayBuilder: _weekDayBuilder,
