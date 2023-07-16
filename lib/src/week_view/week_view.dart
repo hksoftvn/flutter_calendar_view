@@ -238,7 +238,9 @@ class WeekView<T extends Object?> extends StatefulWidget {
     this.fullDayEventBuilder,
     this.halfHourIndicatorSettings,
     // required this.callback,
-    this.pageController, required this.showHalfHours, this.resolutionTime,
+    this.pageController,
+    required this.showHalfHours,
+    this.resolutionTime,
   })  : assert((timeLineOffset) >= 0,
             "timeLineOffset must be greater than or equal to 0"),
         assert(width == null || width > 0,
@@ -657,13 +659,18 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
   }
 
   /// Default builder for week line.
-  Widget _defaultWeekDayBuilder(DateTime date) {
+  Widget _defaultWeekDayBuilder(
+    DateTime date,
+    double? weekTitleWidth,
+    double? weekTitleHeight,
+  ) {
     log("check date: $date and ${DateTime.now()}");
-    final isDate = date == DateTime.now();
+    // final isDate = date.withoutTime == DateTime.now().withoutTime;
+    final isDate = false;
     return Center(
       child: Container(
-        width: _weekTitleWidth,
-        height: widget.weekTitleHeight,
+        width: weekTitleWidth ?? _weekTitleWidth,
+        height: weekTitleHeight ?? widget.weekTitleHeight,
         decoration: BoxDecoration(
             color: isDate ? Color(0xff5C2E85) : Colors.transparent,
             border: Border.all(color: Color(0xffE0E0E0), width: 0.5)),
@@ -719,7 +726,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
   /// Default timeline builder this builder will be used if
   /// [widget.eventTileBuilder] is null
   ///
-  Widget _defaultTimeLineBuilder(DateTime date) {
+  Widget _defaultTimeLineBuilder(DateTime date, double width, double height) {
     final String? timeLineString;
     if (widget.timeLineStringBuilder?.call(date) != null) {
       timeLineString = widget.timeLineStringBuilder?.call(date);

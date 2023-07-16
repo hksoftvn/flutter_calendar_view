@@ -181,6 +181,8 @@ class InternalWeekViewPage<T extends Object?> extends StatelessWidget {
                     width: weekTitleWidth,
                     child: weekDayBuilder(
                       filteredDates[index],
+                      weekTitleWidth,
+                      weekTitleHeight,
                     ),
                   ),
                 )
@@ -230,22 +232,22 @@ class InternalWeekViewPage<T extends Object?> extends StatelessWidget {
                         showVerticalLine: showVerticalLine,
                       ),
                     ),
-                         if(showHalfHours)
-                    CustomPaint(
-                      size: Size(width, height),
-                      painter: HalfHourLinePainter(
-                        lineColor: halfHourIndicatorSettings.color,
-                        lineHeight: halfHourIndicatorSettings.height,
-                        offset:
-                            timeLineWidth + halfHourIndicatorSettings.offset,
-                        minuteHeight: heightPerMinute,
-                        resolutionTime: resolutionTime,
-                        lineStyle: halfHourIndicatorSettings.lineStyle,
-                        dashWidth: halfHourIndicatorSettings.dashWidth,
-                        dashSpaceWidth:
-                            halfHourIndicatorSettings.dashSpaceWidth,
+                    if (showHalfHours)
+                      CustomPaint(
+                        size: Size(width, height),
+                        painter: HalfHourLinePainter(
+                          lineColor: halfHourIndicatorSettings.color,
+                          lineHeight: halfHourIndicatorSettings.height,
+                          offset:
+                              timeLineWidth + halfHourIndicatorSettings.offset,
+                          minuteHeight: heightPerMinute,
+                          resolutionTime: resolutionTime,
+                          lineStyle: halfHourIndicatorSettings.lineStyle,
+                          dashWidth: halfHourIndicatorSettings.dashWidth,
+                          dashSpaceWidth:
+                              halfHourIndicatorSettings.dashSpaceWidth,
+                        ),
                       ),
-                    ),
                     if (showLiveLine && liveTimeIndicatorSettings.height > 0)
                       LiveTimeIndicator(
                         liveTimeIndicatorSettings: liveTimeIndicatorSettings,

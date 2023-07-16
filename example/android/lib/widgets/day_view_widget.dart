@@ -31,7 +31,7 @@ class DayViewWidget extends StatelessWidget {
     );
   }
 
-  Widget _timeLineBuilder(DateTime date) {
+  Widget _timeLineBuilder(DateTime date, double width, double height) {
     if (date.minute != 0) {
       return Stack(
         clipBehavior: Clip.none,

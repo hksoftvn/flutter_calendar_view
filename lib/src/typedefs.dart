@@ -34,6 +34,8 @@ typedef WeekDayBuilder = Widget Function(int day, {bool? onWeekday});
 
 typedef DateWidgetBuilder = Widget Function(
   DateTime date,
+  double weekTitleWidth,
+  double weekTitleHeight,
 );
 
 typedef WeekNumberBuilder = Widget? Function(

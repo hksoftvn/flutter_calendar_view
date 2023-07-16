@@ -375,7 +375,7 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
     // final date = _currentDate;
     return Column(
       children: [
-        _dayTitleBuilder(_currentDate),
+        _dayTitleBuilder(_currentDate,0,0),
         Expanded(
           child: DecoratedBox(
             decoration: BoxDecoration(color: widget.backgroundColor),
@@ -591,7 +591,7 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
   /// Default timeline builder this builder will be used if
   /// [widget.eventTileBuilder] is null
   ///
-  Widget _defaultTimeLineBuilder(date) => DefaultTimeLineMark(
+  Widget _defaultTimeLineBuilder(date,width,height) => DefaultTimeLineMark(
       date: date, timeStringBuilder: widget.timeStringBuilder);
 
   /// Default timeline builder. This builder will be used if
@@ -623,7 +623,7 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
   /// Default view header builder. This builder will be used if
   /// [widget.dayTitleBuilder] is null.
   ///
-  Widget _defaultDayBuilder(DateTime date) {
+  Widget _defaultDayBuilder(DateTime date,width,height) {
     return DayPageHeader(
       date: _currentDate,
       dateStringBuilder: widget.dateStringBuilder,
