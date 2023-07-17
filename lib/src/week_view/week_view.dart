@@ -193,6 +193,8 @@ class WeekView<T extends Object?> extends StatefulWidget {
 
   final MinuteSlotSize? resolutionTime;
 
+  final DateTime dateTimeHeader;
+
   // final PageController pageController;
 
   /// Main widget for week view.
@@ -241,6 +243,7 @@ class WeekView<T extends Object?> extends StatefulWidget {
     this.pageController,
     required this.showHalfHours,
     this.resolutionTime,
+    required this.dateTimeHeader,
   })  : assert((timeLineOffset) >= 0,
             "timeLineOffset must be greater than or equal to 0"),
         assert(width == null || width > 0,
@@ -664,9 +667,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
     double? weekTitleWidth,
     double? weekTitleHeight,
   ) {
-    log("check date: $date and ${DateTime.now()}");
-    // final isDate = date.withoutTime == DateTime.now().withoutTime;
-    final isDate = false;
+    final isDate = date.withoutTime == widget.dateTimeHeader.withoutTime;
     return Center(
       child: Container(
         width: weekTitleWidth ?? _weekTitleWidth,
